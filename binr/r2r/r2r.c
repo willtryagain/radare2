@@ -308,12 +308,12 @@ int main(int argc, char **argv) {
 		state.test_results = pj_new ();
 		pj_a (state.test_results);
 	}
-	state.lock = r_th_lock_new (false);
-	if (!state.lock) {
+	
+	if (!r_th_lock_new (false)) {
 		return -1;
 	}
-	state.cond = r_th_cond_new ();
-	if (!state.cond) {
+	
+	if (!r_th_cond_new ()) {
 		return -1;
 	}
 
@@ -458,12 +458,12 @@ int main(int argc, char **argv) {
 
 	ut64 seconds = (r_time_now_mono () - time_start) / 1000000;
 	printf ("Finished in");
-	if (seconds > 60) {
+	if (seconds >= 60) {
 		ut64 minutes = seconds / 60;
-		printf (" %"PFMT64d" minutes and", seconds / 60);
+		printf (" %"PFMT64d" minutes and", minutes);
 		seconds -= (minutes * 60);
 	}
-	printf (" %"PFMT64d" seconds.\n", seconds % 60);
+	printf (" %"PFMT64d" seconds.\n", seconds);
 
 	if (output_file) {
 		pj_end (state.test_results);
